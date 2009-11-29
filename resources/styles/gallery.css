@@ -1,0 +1,18 @@
+#gallery {
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+#gallery li {
+  float: left;
+  margin: 5px;
+  text-align: center;
+}
+
+#gallery img {
+  width: 240px;
+  height: 240px;
+  display: block;
+}
