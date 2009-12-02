@@ -93,8 +93,9 @@ def index(req):
                     b=b, l=l, err=e.args[0]))
         else:
             req.status = 500
+            import traceback
             req.write(loadtmpl("error/server", func=f, w=w, h=h, t=t, r=r, \
-                    b=b, l=l))
+                    b=b, l=l, err=traceback.format_exc()))
     return
 
 def gallery(req, viewid=None):
@@ -155,21 +156,30 @@ def api(req):
     setup()
 
     req.content_type = "image/png"
-    f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
-    t = req.form.get("t", "2")
-    b = req.form.get("b", "-2")
-    l = req.form.get("l", "-2")
-    r = req.form.get("r", "2")
-    w = str(max(min(int(req.form.get("w", "300")), 1000), 2))
-    h = str(max(min(int(req.form.get("h", "300")), 1000), 2))
+    t = req.form.get("t", "2") or "2"
+    b = req.form.get("b", "-2") or "-2"
+    l = req.form.get("l", "-2") or "-2"
+    r = req.form.get("r", "2") or "2"
+    w = req.form.get("w", "300") or "300"
+    h = req.form.get("h", "300") or "300"
 
-    if "f" in req.form:
-        try:
-            outsuffix = "-%d" % makeimage(f, w, h, l, b, r, t)
-        except:
-            req.status = 400
-    else:
-        outsuffix = ""
+    try:
+        assert 0 < int(w) < 300
+        assert 0 < int(h) < 300
+    except AssertionError, ValueError:
+        req.status = 400
+        return
+
+    if "f" not in req.form or not req.form["f"]:
+        req.status = 400
+        return
+
+    f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
+    try:
+        outsuffix = "-%d" % makeimage(f, w, h, l, b, r, t)
+    except:
+        req.status = 400
+        return
 
     req.write(open("img/output%s.png" % outsuffix, "rb").read())
 

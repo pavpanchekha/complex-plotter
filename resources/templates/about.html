@@ -26,7 +26,7 @@ the website. Enjoy!
   <li><code>asin</code>, <code>acos</code>, <code>atan</code>, <code>asec</code>, <code>acsc</code>, <code>acot</code></li>
   <li><code>asinh</code>, <code>acosh</code>, <code>atanh</code>, <code>asech</code>, <code>acsch</code>, <code>acoth</code></li>
   <li><code>gamma</code></li>
-  <li><code>eta</code>, <code>zeta</code>*</li>
+  <li><code>eta</code>, <code>zeta</code>*</li>, <code>xi</code>*&dagger;</li>
   <li><code>ccrand</code> (<i> 0 &le; a, b &le; 1</i>)</li>
   <li><code>cc</code></li>
 </ul>
@@ -38,6 +38,12 @@ errors may manifest themselves as phantom poles or zeros. For example,
 the zeta function has poles that are extremely close to zeros that are
 supposed to cancel them. We are looking for better ways of evaluating
 these functions &mdash; write! But for now, please ignore these artifacts.
+</p>
+<p>
+Functions marked with a <strong>&dagger;</strong> are implemented but are
+extremely slow. The website's maintainer kindly asks that you don't hammer
+his computer with these functions. If you have better ways of calculating
+these functions, write!
 </p>
 
 <h2>List of Constants</h2>
@@ -53,7 +59,7 @@ perhaps you shouldn't hammer my server and just download the source code
 that we so nicely provide. That's right, just hit that link up on top.</p>
 
 <p>Now then, the actual <abbr title="Application Programming
-  Interface">API</code> &mdash; it's simple, really. All you have to do
+  Interface">API</abbr> &mdash; it's simple, really. All you have to do
 is send a <code>GET</code> request to
 <code>http://panchekha.no-ip.com:8082/complex/api</code>, with paremeters
 specifying what sort of image you want. The table below represents the
@@ -66,12 +72,10 @@ paremeters:</p>
   </thead>
   <tbody>
     <tr><td><code>f</code></td><td>The actual function, urlencoded. If
-        not specified, the default function, <code>exp(-pi * sec(pi *
-          z/2))</code> is displayed. Be warned that the default image
-        is 750 by 750 pixels, while the default (see: <code>w</code>
-        and <code>h</code> parameters) is smaller. In general, I'd really
-        like it if you kept the default somewhere bundled with your
-        application anyway.</td></tr>
+        not specified, an error occurs. In general, I'd really
+        like it if you kept the default image, if your application uses
+        one, bundled somewhere within your application. Don't hit the
+        server on startup.</td></tr>
     <tr><td><code>w</code> and <code>h</code></td><td>Width and height.
         The default is 300 by 300 (just right for the iPhone screen) except
         for the default image.</td></tr>

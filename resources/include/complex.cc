@@ -53,11 +53,12 @@ double win[2][2] = RANGE;
 double xstep = (win[1][0] - win[0][0]) / WIDTH;
 double ystep = (win[1][1] - win[0][1]) / HEIGHT;
 
-void run(int c, int r, cc (*func)(cc)) {
+void run(int c, int r) {
 	cc z = cc(win[0][0] + xstep * c, win[1][1] - ystep * r);
-	cc w = -func(z);
-	double in = atan(log(abs(w))) / pi + .5;
-	double hue = (arg(w) / (2 * pi) + .5);
+	cc w = log(-f1(z));
+
+	double in = atan(real(w)) / pi + .5;
+	double hue = (imag(w) / (2 * pi) + .5);
 	double sat = in;
 	hsi2rgb(hue, sat, in);
 }
@@ -66,7 +67,7 @@ int main() {
 	image.SetSize(WIDTH, HEIGHT);
 	for(int c=0; c < WIDTH; c++) {
 		for(int r=0; r < HEIGHT; r++) {
-			run(c, r, f1);
+			run(c, r);
             RGBApixel* p = image(c, r);
 			p->Red = col[0];
 			p->Green = col[1];

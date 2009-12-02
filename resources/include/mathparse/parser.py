@@ -13,7 +13,7 @@ precedence = (
     ("right", "NOT"),
     ("left", "LE", "GE", "NE", "EQ", "<", ">"),
     ("left", "-", "+"),
-    ("left",  "/", "*", "IMPMULT"),
+    ("left",  "/", "*", "MUL"),
     ("right", "UMINUS"),
     ("right", "^"),
     ("left", "!"),
@@ -57,8 +57,8 @@ def p_expr_math(p):
             | expr '/' expr"""
     p[0] = "(" + p[1] + ") " + p[2] + " (" + p[3] + ")"
 
-def p_expr_impmult(p):
-    """expr : expr expr %prec IMPMULT"""
+def p_kernel_impmult(p):
+    """kernel : expr expr %prec MUL"""
     p[0] = "(" + p[1] + ") * (" + p[2] + ")"
 
 def p_expr_comp(p):
@@ -123,4 +123,7 @@ def p_error(p):
             " errors (unbalanced parentheses, unfinished " \
             "expressions).")
 
-parser = yacc.yacc(debug=0)
+if __name__ == "__main__":
+    parser = yacc.yacc(debug=1)
+else:
+    parser = yacc.yacc(debug=0)
