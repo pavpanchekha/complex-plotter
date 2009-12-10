@@ -27,7 +27,7 @@ def p_kernel_numeric(p):
     """kernel : DEC
               | INT
               | BOOL"""
-    p[0] = str(float(p[1]))
+    p[0] = "cc(%f, 0.0)" % float(p[1])
 
 def p_kernel_ident(p):
     """kernel : IDENT"""

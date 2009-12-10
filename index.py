@@ -116,8 +116,8 @@ def gallery(req, viewid=None):
     to_make = [] # Images that someone deleted and that we thus have to make
     gallery_code = [] # HTML code that we'll be injecting. Ugly, I know.
 
-    template = """<li><a href="gallery/%(i)d"><img src="img/gallery-%(i)d.png" alt="%(f)s" />"""\
-            """<code>%(f)s</code></a></li>"""
+    template = """<li><a href="gallery/%(i)d"><img src="img/gallery-%(i)d.png" """\
+            """alt="%(f)s" /><code>%(f)s</code></a></li>"""
     for (i, desc, f, w, h, l, b, r, t) in gal:
         if not os.path.exists("img/gallery-%d.png" % i):
             to_make.append((i, desc, f, w, h, l, b, r, t))
@@ -133,7 +133,8 @@ def _gallery(req, viewid):
     import cPickle as pickle
     gal = pickle.load(open("img/database.pickle"))
     i, desc, f, w, h, l, b, r, t = filter(lambda x: x[0] == viewid, gal)[0]
-    req.write(loadtmpl("gallery-view", f=html_clean(f), desc=html_clean(desc), l=l, b=b, r=r, t=t, i=i))
+    req.write(loadtmpl("gallery-view", f=html_clean(f), desc=html_clean(desc),\
+            l=l, b=b, r=r, t=t, i=i))
 
 def gallery_add(req):
     setup()

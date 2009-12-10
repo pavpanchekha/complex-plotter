@@ -92,6 +92,7 @@ form button {
 #img {
   position: relative;
   width: 750px;
+  top: 2px;
 }
 
 #cont {

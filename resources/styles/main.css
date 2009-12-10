@@ -9,6 +9,11 @@ img {
   border-style: none;
 }
 
+h2 {
+    clear: both;
+    border-bottom: 2px solid black;
+}
+
 img.float {
     float: left;
     width: 250px;
