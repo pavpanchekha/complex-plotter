@@ -80,3 +80,14 @@ extern inline cc atanh(cc z) {return .5*(log(1.0 + z) - log(1.0 - z));}
 extern inline cc acsch(cc z) {return log(sqrt(1.0/(z*z) + 1.0) + 1.0/z);}
 extern inline cc asech(cc z) {return log(sqrt(1.0/(z*z) - 1.0) + 1.0/z);}
 extern inline cc acoth(cc z) {return .5*(log(1.0 + 1.0/z) - log(1.0 - 1.0/z));}
+
+extern inline cc hyper2f1(cc a, cc b, cc c, cc z) {
+    cc w(1, 0);
+    cc q(1, 0);
+    for (int i = 1; i < 25; i++) {
+        double fi = (double)i;
+        q *= (a + fi) * (b + fi) / (c + fi) / (1.0 + fi);
+        w += q * pow(z, fi);
+    }
+    return w;
+}
