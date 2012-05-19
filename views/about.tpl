@@ -27,7 +27,7 @@ the website. Enjoy!
   <li><code>asin</code>, <code>acos</code>, <code>atan</code>, <code>asec</code>, <code>acsc</code>, <code>acot</code></li>
   <li><code>asinh</code>, <code>acosh</code>, <code>atanh</code>, <code>asech</code>, <code>acsch</code>, <code>acoth</code></li>
   <li><code>gamma</code></li>
-  <li><code>eta</code>, <code>zeta</code>*</li>, <code>xi</code>*&dagger;</li>
+  <li><code>eta</code>, <code>zeta</code>*, <code>xi</code>*&dagger;</li>
   <li><code>ccrand</code> (<i> 0 &le; a, b &le; 1</i>)</li>
   <li><code>cc</code></li>
 </ul>

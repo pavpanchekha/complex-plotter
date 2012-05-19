@@ -18,8 +18,7 @@ precedence = (
     ("right", "^"),
     ("left", "!"),
     ("left", "FNCALL"),
-
-	("left", "PARENTHESES"),
+    ("left", "PARENTHESES"),
     ("left", "|"),
 )
 
