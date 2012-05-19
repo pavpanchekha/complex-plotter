@@ -1,5 +1,5 @@
 <form method="get" action=".">
-  <input name="f" id="f" value="%(func)s"/>
+  <input name="f" id="f" value="{{func}}"/>
   <a href="#" id="viewwind"><img src="resources/images/resize.png" /></a>
   <a href="#" id="helpbut"><img src="resources/images/help.png" /></a>
   <div id="help" class="note">
@@ -45,7 +45,7 @@
     <p>There was an error with your input &mdash; our parser couldn't
     understand what you meant. Perhaps you should modify your input and
     try again. Here's the error message:</p>
-    <pre>%(err)s</pre>
+    <pre>{{err}}</pre>
 
     <p>If you're not sure why you got this error message, try
     <a href="/bugs/reportissue.php" title="Bug Tracker">reporting a bug</a>.</p>
@@ -54,13 +54,13 @@
     <img src='img/error.png' width="750px" height="750px" alt="Oops!"/>
     <div id="cont">
       <div id="ll" class="note">
-        <i><input name="l" id="l" value="%(l)s" /> + <input name="b" id="b" value="%(b)s"/>i</i>
+        <i><input name="l" id="l" value="{{l}}" /> + <input name="b" id="b" value="{{b}}"/>i</i>
       </div>
       <div id="tr" class="note">
-        <i><input name="r" id="r" value="%(r)s" /> + <input name="t" id="t" value="%(t)s"/>i</i>
+        <i><input name="r" id="r" value="{{r}}" /> + <input name="t" id="t" value="{{t}}"/>i</i>
       </div>
       <div id="size" class="note">
-        <input name="w" id="w" value="%(w)s" /> &times; <input name="h" id="h" value="%(h)s" />
+        <input name="w" id="w" value="{{t}}" /> &times; <input name="h" id="h" value="{{h}}" />
       </div>
       <div id="resetbut" class="note">
         <a href="#" id="reset">Reset Window</a> |
