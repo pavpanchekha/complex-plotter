@@ -117,7 +117,7 @@ def gallery():
 @bottle.view("gallery-view")
 def gallery_view(viewid):
     gal = pickle.load(open("img/database.pickle", "rb"))
-    i, desc, f, w, h, l, b, r, t = next(filter(lambda x: x[0] == viewid, gal))
+    i, desc, f, w, h, l, b, r, t = filter(lambda x: x[0] == viewid, gal)
     return dict(f=html_clean(f), desc=html_clean(desc),\
                     l=l, b=b, r=r, t=t, i=i)
 
