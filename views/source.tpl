@@ -1,3 +1,5 @@
+%rebase master title="Source Code", extrahead='<script src="/resources/libraries/highlight.js"></script><link rel="stylesheet" href="/resources/libraries/highlight.css" />'
+<script> hljs.initHighlightingOnLoad(); </script>
 
 <h2>Complex Plotter</h2>
 <p>
@@ -5,7 +7,7 @@ This file implements the core of the plotter core. You'll note that the
 parser we use just inserts the parsed input straight into <code>C++</code>
 code. Yes, that's massively insecure. We know.
 </p>
-%(complex)s
+<pre><code class="language-cpp">{{complex}}</code></pre>
 
 <h2>Complex Function Library</h2>
 <p>
@@ -17,7 +19,7 @@ accustomed to, either because these functions are simply shortcuts
 to programmers (e.g. <code>zeta</code>). Thus, these functions are
 implemented in a seperate library.
 </p>
-%(ccfunc)s
+<pre><code class="language-cpp">{{ccfunc}}</code></pre>
 
 <h2>Website Core</h2>
 <p>
@@ -26,10 +28,10 @@ implements the core of the web site. It should give some idea of how
 the <code>C++</code> files are constructed, compiled, and run. Please
 don't write to say how hackish this all is.
 </p>
-%(index)s
+<pre><code class="language-python">{{index}}</code></pre>
 
 <h2><code>mathparse.parser</code></h2>
-%(mathparse)s
+<pre><code class="language-python">{{mathparse}}</code></pre>
 
 <h2>Licensing</h2>
 <p>All code on this page, and all other code in this web site not

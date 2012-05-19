@@ -65,11 +65,10 @@ hr {
   clear: both;
 }
 
-table.highlighttable, div.listing {
+pre {
   max-height: 24em;
   overflow: auto;
   display: block;
   color: black;
   border: 1px solid gray;
-  padding: 2px;
 }

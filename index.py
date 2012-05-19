@@ -176,27 +176,12 @@ def feedback():
 @bottle.route("/source")
 @bottle.view("source")
 def source():
-    from pygments import highlight
-    from pygments.lexers import PythonLexer, CppLexer
-    from pygments.formatters import HtmlFormatter
-
-    formatter = HtmlFormatter(linenos="table", noclasses=True)
-    
-    complexcc = open("resources/include/complex.cc").read()
-    complexcc = highlight(complexcc, CppLexer(), formatter)
-
-    ccfunccc = open("resources/include/ccfunc.cc").read()
-    ccfunccc = highlight(ccfunccc, CppLexer(), formatter)
-    
-    indexpy = open("index.py").read()
-    indexpy = highlight(indexpy, PythonLexer(), formatter)
-    
-    mathparse = open("resources/include/mathparse/parser.py").read()
-    mathparse = highlight(mathparse, PythonLexer(), formatter)
-
-    return dict(complex=complexcc, index=indexpy, \
-                    ccfunc=ccfunccc, mathparse=mathparse)
+    complexcc = open("resources/include/complex.cc", encoding="utf8").read()
+    ccfunccc = open("resources/include/ccfunc.cc", encoding="utf8").read()
+    indexpy = open("index.py", encoding="utf8").read()
+    mathparse = open("mathparse/parser.py", encoding="utf8").read()
+    return dict(complex=complexcc, index=indexpy,
+                ccfunc=ccfunccc, mathparse=mathparse)
 
 if __name__ == "__main__":
-    #from flup.server.fcgi import WSGIServer
-    bottle.run(host="localhost", port=8000, reloader=True, interval=.5)
+    bottle.run(**config.run_params)

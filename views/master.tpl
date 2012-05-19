@@ -1,3 +1,4 @@
+% setdefault("extrahead", "")
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/resources/styles/main.css" />
     <link rel="stylesheet" href="/resources/styles/plotter.css" />
     <link rel="stylesheet" href="/resources/styles/gallery.css" />
+    {{!extrahead}}
     <title>{{title}} &mdash; Complex Plotter</title>
   </head>
   <body>
