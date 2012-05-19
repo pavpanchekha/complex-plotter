@@ -48,10 +48,6 @@ def makeimage(f, w, h, l, b, r, t):
 
     return id
 
-def html_clean(s):
-    s = s.replace("--", "—")
-    return s
-
 @bottle.route('/resources/<filename:path>')
 def send_resource(filename):
     root = __dir__  + "/resources"
@@ -118,8 +114,7 @@ def gallery():
 def gallery_view(viewid):
     gal = pickle.load(open("img/database.pickle", "rb"))
     i, desc, f, w, h, l, b, r, t = filter(lambda x: x[0] == viewid, gal)[0]
-    return dict(f=html_clean(f), desc=html_clean(desc),\
-                    l=l, b=b, r=r, t=t, i=i)
+    return dict(f=f, desc=desc, l=l, b=b, r=r, t=t, i=i)
 
 @bottle.route("/gallery_add")
 def gallery_add(req):
