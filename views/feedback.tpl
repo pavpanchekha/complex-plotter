@@ -1,3 +1,4 @@
+%rebase master title="Feedback"
 <p>Have comments, suggestions, hate mail? Send them along. In particular,
 you're sending to <a href="mailto:pavpanchekha@gmail.com">my email
   address</a>. However, it'd probably be even better, if you're trying to

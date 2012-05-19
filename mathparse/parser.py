@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import ply.yacc as yacc
-from lexer import tokens, literals
+from .lexer import tokens, literals
 
 class YaccError(Exception): pass
 
@@ -27,7 +27,7 @@ def p_kernel_numeric(p):
     """kernel : DEC
               | INT
               | BOOL"""
-    p[0] = "cc(%f, 0.0)" % float(p[1])
+    p[0] = "cc(%.1f, 0.0)" % float(p[1])
 
 def p_kernel_ident(p):
     """kernel : IDENT"""

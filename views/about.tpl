@@ -1,3 +1,4 @@
+%rebase master title="About"
 <img src="img/output.png" class="float" />
 <p>
 What is this? It's some random complex function. Each point in the

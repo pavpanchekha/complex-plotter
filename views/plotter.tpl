@@ -1,5 +1,6 @@
+%rebase master title="Plotter"
 <form method="get" action=".">
-  <input name="f" id="f" value="%(func)s"/>
+  <input name="f" id="f" value="{{func}}"/>
   <a href="#" id="viewwind"><img src="resources/images/resize.png" /></a>
   <a href="#" id="helpbut"><img src="resources/images/help.png" /></a>
   <div id="help" class="note">
@@ -42,16 +43,16 @@
   </div>
   <button type="submit">Plot!</button>
   <div id="img">
-    <img src='img/output%(outsuffix)s.png' width="750px" height="750px" alt="%(func)s"/>
+    <img src='img/output{{outsuffix}}.png' width="750px" height="750px" alt="{{func}}"/>
     <div id="cont">
       <div id="ll" class="note">
-        <i><input name="l" id="l" value="%(l)s" /> + <input name="b" id="b" value="%(b)s"/>i</i>
+        <i><input name="l" id="l" value="{{l}}" /> + <input name="b" id="b" value="{{b}}"/>i</i>
       </div>
       <div id="tr" class="note">
-        <i><input name="r" id="r" value="%(r)s" /> + <input name="t" id="t" value="%(t)s"/>i</i>
+        <i><input name="r" id="r" value="{{r}}" /> + <input name="t" id="t" value="{{t}}"/>i</i>
       </div>
       <div id="size" class="note">
-        <input name="w" id="w" value="%(w)s" /> &times; <input name="h" id="h" value="%(h)s" />
+        <input name="w" id="w" value="{{w}}" /> &times; <input name="h" id="h" value="{{h}}" />
       </div>
       <div id="resetbut" class="note">
         <a href="#" id="reset">Reset Window</a> |
@@ -63,7 +64,7 @@
 
 
 <script>
-  data = {f: "%(func)s", w: %(w)s, h: %(h)s, t: %(t)s, b: %(b)s, r: %(r)s, l: %(l)s};
+  data = {f: "{{func}}", w: {{w}}, h: {{h}}, t: {{t}}, b: {{b}}, r: {{r}}, l: {{l}}};
 
   $(function () {
     api = $.Jcrop("#img img");

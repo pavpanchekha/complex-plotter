@@ -28,6 +28,9 @@ don't write to say how hackish this all is.
 </p>
 %(index)s
 
+<h2><code>mathparse.parser</code></h2>
+%(mathparse)s
+
 <h2>Licensing</h2>
 <p>All code on this page, and all other code in this web site not
 entered by users or with its own license header, is licensed under
