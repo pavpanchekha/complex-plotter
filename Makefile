@@ -5,4 +5,7 @@ redo: resources/include/EasyBMP/EasyBMP.cpp
 	[ -z img ] && mkdir img && echo "(l." > img/database.pickle
 
 start:
-	python index.py &
+	python2 index.py &
+
+pull:
+	git pull origin wsgi-port
