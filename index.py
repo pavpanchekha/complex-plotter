@@ -27,9 +27,9 @@ def makeimage(f, w, h, l, b, r, t):
     cc = open("resources/include/complex.cc").read() % dict(f=f, w=w, h=h, \
             l=l, b=b, r=r, t=t, o=outname)
     open("/tmp/complex-%d/complex.cc" % id, "w").write(cc)
-    os.symlink("/resources/include/EasyBMP",
+    os.symlink(__dir__ + "/resources/include/EasyBMP",
                "/tmp/complex-%d/EasyBMP" % id)
-    os.symlink("/resources/include/ccfunc.cc",
+    os.symlink(__dir__ + "/resources/include/ccfunc.cc",
                "/tmp/complex-%d/ccfunc.cc" % id)
 
     P = subprocess.Popen(["g++", "-std=c++0x",
