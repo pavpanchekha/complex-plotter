@@ -176,10 +176,11 @@ def feedback():
 @bottle.route("/source")
 @bottle.view("source")
 def source():
-    complexcc = open("resources/include/complex.cc", encoding="utf8").read()
-    ccfunccc = open("resources/include/ccfunc.cc", encoding="utf8").read()
-    indexpy = open("index.py", encoding="utf8").read()
-    mathparse = open("mathparse/parser.py", encoding="utf8").read()
+    import codecs
+    complexcc = open("resources/include/complex.cc").read()
+    ccfunccc = open("resources/include/ccfunc.cc").read()
+    indexpy = codecs.open("index.py", encoding="utf8").read()
+    mathparse = codecs.open("mathparse/parser.py", encoding="utf8").read()
     return dict(complex=complexcc, index=indexpy,
                 ccfunc=ccfunccc, mathparse=mathparse)
 
