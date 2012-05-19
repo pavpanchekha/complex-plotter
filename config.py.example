@@ -1,0 +1,5 @@
+import bottle
+# Extra parameters passed to bottle.run. Use these to configure how
+# the server is run. For example, dict(server=bottle.FlupFCGIServer)
+# for an FCGI setup.
+run_params = dict(port=8000, host="localhost", reloader=True)

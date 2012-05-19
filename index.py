@@ -2,12 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Configuration Section
-
-config = {
-    # The directory, on disk, where complex-plotter is located
-    "dir": "/home/pavpanchekha/dev/complex-plotter",
-}
-
 import bottle
 import os
 import subprocess
@@ -15,6 +9,9 @@ import random
 import shutil
 import pickle
 import traceback
+
+__dir__ = os.path.dirname(os.path.abspath(__file__))
+import config
 
 class CCError(Exception): pass
 
@@ -30,10 +27,10 @@ def makeimage(f, w, h, l, b, r, t):
     cc = open("resources/include/complex.cc").read() % dict(f=f, w=w, h=h, \
             l=l, b=b, r=r, t=t, o=outname)
     open("/tmp/complex-%d/complex.cc" % id, "w").write(cc)
-    os.symlink(config["dir"] + "/resources/include/EasyBMP", \
-            "/tmp/complex-%d/EasyBMP" % id)
-    os.symlink(config["dir"] + "/resources/include/ccfunc.cc", \
-            "/tmp/complex-%d/ccfunc.cc" % id)
+    os.symlink("/resources/include/EasyBMP",
+               "/tmp/complex-%d/EasyBMP" % id)
+    os.symlink("/resources/include/ccfunc.cc",
+               "/tmp/complex-%d/ccfunc.cc" % id)
 
     P = subprocess.Popen(["g++", "-std=c++0x",
         "/tmp/complex-%d/complex.cc" % id,
@@ -57,12 +54,12 @@ def html_clean(s):
 
 @bottle.route('/resources/<filename:path>')
 def send_resource(filename):
-    root = config["dir"] + "/resources"
+    root = __dir__  + "/resources"
     return bottle.static_file(filename, root=root)
 
 @bottle.route('/img/<filename:path>')
 def send_img(filename):
-    root = config["dir"] + "/img"
+    root = __dir__ + "/img"
     return bottle.static_file(filename, root=root, mimetype="image/bmp")
 
 @bottle.route("/")
