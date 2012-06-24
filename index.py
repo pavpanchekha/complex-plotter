@@ -34,8 +34,7 @@ def index():
     err = None
 
     try:
-        id = image_cache.get((f, w, h, l, b, r, t))
-        img = "img/output-%d.png" % id
+        img = image_cache.get((f, w, h, l, b, r, t))
     except Exception as e:
         err = e
     
@@ -65,8 +64,7 @@ def gallery():
     
     for (i, desc, f, w, h, l, b, r, t) in gallery:
         if not os.path.exists("img/gallery-%d.png" % i):
-            id = image_cache.get((f, w, h, l, b, r, t))
-            img = "img/output-%d.png" % id
+            img = image_cache.get((f, w, h, l, b, r, t))
             shutil.copy(img, "img/gallery-%d.png" % i)
 
     return dict(gallery=gallery)
@@ -116,8 +114,7 @@ def api(req):
 
     f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
     try:
-        id = image_cache.get((f, w, h, l, b, r, t))
-        img = "img/output-%d.png" % id
+        img = image_cache.get((f, w, h, l, b, r, t))
     except:
         bottle.abort(400, "Failed to make image")
 

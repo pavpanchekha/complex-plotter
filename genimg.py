@@ -13,8 +13,7 @@ class ImageCache(lru.LRUCache):
     def compute_value(self, args):
         return make_image(*args)
 
-    def evict(self, args, id):
-        fname = "img/output-%d.png" % id
+    def evict(self, args, fname):
         os.unlink(fname)
 
 def make_image(f, w, h, l, b, r, t):
@@ -43,8 +42,9 @@ def make_image(f, w, h, l, b, r, t):
     if errors: raise CCError(errors)
 
     subprocess.call("/tmp/complex-%d/plotter" % id)
-    subprocess.call(["convert", outname, "img/output-%d.png" % id])
+    img = "img/output-%d.png" % id
+    subprocess.call(["convert", outname, img])
 
     shutil.rmtree("/tmp/complex-%d" % id)
 
-    return id
+    return img
