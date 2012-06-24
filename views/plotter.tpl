@@ -43,7 +43,7 @@
   </div>
   <button type="submit">Plot!</button>
   <div id="img">
-    <img src='img/output{{outsuffix}}.png' width="750px" height="750px" alt="{{func}}"/>
+    <img src='{{img}}' width="750px" height="750px" alt="{{func}}"/>
     <div id="cont">
       <div id="ll" class="note">
         <i><input name="l" id="l" value="{{l}}" /> + <input name="b" id="b" value="{{b}}"/>i</i>

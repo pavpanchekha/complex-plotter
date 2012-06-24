@@ -16,15 +16,7 @@ class CCError(Exception): pass
 # A 100-image image cache
 image_cache = genimg.ImageCache(100)
 
-@bottle.route('/resources/<filename:path>')
-def send_resource(filename):
-    root = __dir__  + "/resources"
-    return bottle.static_file(filename, root=root)
-
-@bottle.route('/img/<filename:path>.png')
-def send_img(filename):
-    root = __dir__ + "/img"
-    return bottle.static_file(filename + ".png", root=root, mimetype="image/png")
+## The main page
 
 @bottle.route("/")
 def index():
@@ -38,24 +30,23 @@ def index():
     w = str(max(min(int(form.get("w", "750")), 1000), 2))
     h = str(max(min(int(form.get("h", "750")), 1000), 2))
 
+    # Errors will sink into here
     err = None
-    if "f" in form:
-        try:
-            outsuffix = "-%d" % image_cache.get((f, w, h, l, b, r, t))
-            err = None
-        except Exception as e:
-            err = e
-    else:
-        outsuffix = ""
+
+    try:
+        id = image_cache.get((f, w, h, l, b, r, t))
+        img = "img/output-%d.png" % id
+    except Exception as e:
+        err = e
     
     if not err:
-        return bottle.template("plotter", outsuffix=outsuffix, func=f, w=w, \
+        return bottle.template("plotter", img=img, func=f, w=w, \
                                    h=h, t=t, r=r, b=b, l=l)
     else:
         from ply.lex import LexError
         from mathparse.parser import YaccError
         if type(err) in (LexError, YaccError, CCError):
-            body = bottle.template("error/parse", func=f, w=w, h=h, t=t, r=r, \
+            body = bottle.template("error/parse", func=f, img=img, w=w, h=h, t=t, r=r, \
                                        b=b, l=l, err=err.args[0])
             bottle.abort(400, body)
         else:
@@ -63,6 +54,8 @@ def index():
                                        b=b, l=l, err=traceback.format_exc())
             bottle.abort(500, body)
     return
+
+## The gallery pages
 
 @bottle.route("/gallery")
 @bottle.view("gallery")
@@ -73,7 +66,8 @@ def gallery():
     for (i, desc, f, w, h, l, b, r, t) in gallery:
         if not os.path.exists("img/gallery-%d.png" % i):
             id = image_cache.get((f, w, h, l, b, r, t))
-            os.rename("img/output-%d.png" % id, "img/gallery-%d.png" % i)
+            img = "img/output-%d.png" % id
+            shutil.copy(img, "img/gallery-%d.png" % i)
 
     return dict(gallery=gallery)
 
@@ -99,6 +93,8 @@ def gallery_add(req):
     gal.append((max(map(lambda x: x[0], gal)) + 1, desc, f, w, h, l, b, r, t))
     pickle.dump(gal, open("img/database.pickle", "wb"))
 
+## The API page
+
 @bottle.route("/api")
 def api(req):
     bottle.response.content_type = "image/png"
@@ -120,11 +116,14 @@ def api(req):
 
     f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
     try:
-        outsuffix = "-%d" % image_cache.get((f, w, h, l, b, r, t))
+        id = image_cache.get((f, w, h, l, b, r, t))
+        img = "img/output-%d.png" % id
     except:
         bottle.abort(400, "Failed to make image")
 
-    return open("img/output%s.png" % outsuffix, "rb").read()
+    return open(img, "rb").read()
+
+## "Static" pages
 
 @bottle.route("/about")
 @bottle.view("about")
@@ -146,6 +145,18 @@ def source():
     mathparse = codecs.open("mathparse/parser.py", encoding="utf8").read()
     return dict(complex=complexcc, index=indexpy,
                 ccfunc=ccfunccc, mathparse=mathparse)
+
+## Page Resources
+
+@bottle.route('/resources/<filename:path>')
+def send_resource(filename):
+    root = __dir__  + "/resources"
+    return bottle.static_file(filename, root=root)
+
+@bottle.route('/img/<filename:path>.png')
+def send_img(filename):
+    root = __dir__ + "/img"
+    return bottle.static_file(filename + ".png", root=root, mimetype="image/png")
 
 if __name__ == "__main__":
     bottle.run(**config.run_params)
