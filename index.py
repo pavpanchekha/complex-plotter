@@ -4,59 +4,27 @@
 # Configuration Section
 import bottle
 import os
-import subprocess
-import random
-import shutil
 import pickle
 import traceback
+import genimg
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 import config
 
 class CCError(Exception): pass
 
-def makeimage(f, w, h, l, b, r, t):
-    from mathparse.parser import parser
-    f = parser.parse(f)
-
-    id = random.randint(1, 100000000)
-
-    outname = "/tmp/complex-%d/output.bmp" % id
-
-    os.mkdir("/tmp/complex-%d" % id)
-    cc = open("resources/include/complex.cc").read() % dict(f=f, w=w, h=h, \
-            l=l, b=b, r=r, t=t, o=outname)
-    open("/tmp/complex-%d/complex.cc" % id, "w").write(cc)
-    os.symlink(__dir__ + "/resources/include/EasyBMP",
-               "/tmp/complex-%d/EasyBMP" % id)
-    os.symlink(__dir__ + "/resources/include/ccfunc.cc",
-               "/tmp/complex-%d/ccfunc.cc" % id)
-
-    P = subprocess.Popen(["g++", "-std=c++0x",
-        "/tmp/complex-%d/complex.cc" % id,
-        "/tmp/complex-%d/EasyBMP/EasyBMP.o" % id, "-o",
-        "/tmp/complex-%d/plotter" % id, "-O1"],
-        stderr=subprocess.PIPE) # O1 has been experimentally found best
-    errors = P.communicate()[1]
-    if errors:
-        raise CCError(errors)
-
-    subprocess.call("/tmp/complex-%d/plotter" % id)
-    subprocess.call(["convert", outname, "img/output-%d.png" % id])
-
-    shutil.rmtree("/tmp/complex-%d" % id)
-
-    return id
+# A 100-image image cache
+image_cache = genimg.ImageCache(100)
 
 @bottle.route('/resources/<filename:path>')
 def send_resource(filename):
     root = __dir__  + "/resources"
     return bottle.static_file(filename, root=root)
 
-@bottle.route('/img/<filename:path>')
+@bottle.route('/img/<filename:path>.png')
 def send_img(filename):
     root = __dir__ + "/img"
-    return bottle.static_file(filename, root=root, mimetype="image/bmp")
+    return bottle.static_file(filename + ".png", root=root, mimetype="image/png")
 
 @bottle.route("/")
 def index():
@@ -73,7 +41,7 @@ def index():
     err = None
     if "f" in form:
         try:
-            outsuffix = "-%d" % makeimage(f, w, h, l, b, r, t)
+            outsuffix = "-%d" % image_cache.get((f, w, h, l, b, r, t))
             err = None
         except Exception as e:
             err = e
@@ -104,7 +72,7 @@ def gallery():
     
     for (i, desc, f, w, h, l, b, r, t) in gallery:
         if not os.path.exists("img/gallery-%d.png" % i):
-            id = makeimage(f, w, h, l, b, r, t)
+            id = image_cache.get((f, w, h, l, b, r, t))
             os.rename("img/output-%d.png" % id, "img/gallery-%d.png" % i)
 
     return dict(gallery=gallery)
@@ -152,7 +120,7 @@ def api(req):
 
     f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
     try:
-        outsuffix = "-%d" % makeimage(f, w, h, l, b, r, t)
+        outsuffix = "-%d" % image_cache.get((f, w, h, l, b, r, t))
     except:
         bottle.abort(400, "Failed to make image")
 
