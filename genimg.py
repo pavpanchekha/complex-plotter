@@ -45,7 +45,7 @@ def make_image(f, w, h, l, b, r, t):
 
     subprocess.call("/tmp/complex-%d/plotter" % id)
     img = "img/output-%d.png" % id
-    subprocess.call(["convert", outname, img])
+    subprocess.call(["convert", outname, os.path.join(__dir__, img)])
 
     shutil.rmtree("/tmp/complex-%d" % id)
 
