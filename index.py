@@ -94,12 +94,17 @@ def gallery_add(req):
 @bottle.route("/api")
 def api(req):
     bottle.response.content_type = "image/png"
-    t = req.form.get("t", "2") or "2"
-    b = req.form.get("b", "-2") or "-2"
-    l = req.form.get("l", "-2") or "-2"
-    r = req.form.get("r", "2") or "2"
-    w = req.form.get("w", "300") or "300"
-    h = req.form.get("h", "300") or "300"
+
+    if "f" not in req.form or not req.form["f"]:
+        bottle.abort(400, "No equation specified")
+
+    f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
+    t = req.form.get("t", "2")
+    b = req.form.get("b", "-2")
+    l = req.form.get("l", "-2")
+    r = req.form.get("r", "2")
+    w = req.form.get("w", "750")
+    h = req.form.get("h", "750")
 
     try:
         assert 0 < int(w) < 300
@@ -107,10 +112,6 @@ def api(req):
     except (AssertionError, ValueError):
         bottle.abort(400, "Width and height out of bounds")
 
-    if "f" not in req.form or not req.form["f"]:
-        bottle.abort(400, "No equation specified")
-
-    f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
     try:
         img = image_cache.get((f, w, h, l, b, r, t))
     except:
