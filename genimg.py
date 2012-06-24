@@ -16,6 +16,8 @@ class ImageCache(lru.LRUCache):
     def evict(self, args, fname):
         os.unlink(fname)
 
+class CCError(Exception): pass
+
 def make_image(f, w, h, l, b, r, t):
     f = parser.parse(f)
 

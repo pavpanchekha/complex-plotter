@@ -11,15 +11,18 @@ import genimg
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 import config
 
-class CCError(Exception): pass
-
 # A 100-image image cache
 image_cache = genimg.ImageCache(100)
 
 ## The main page
 
 @bottle.route("/")
+@bottle.view("plotter")
 def index():
+    from ply.lex import LexError
+    from mathparse.parser import YaccError
+    from genimg import CCError
+
     form = bottle.request.query
 
     f = form.get("f", "exp(-pi * sec(pi * z/2))")
@@ -29,30 +32,25 @@ def index():
     r = form.get("r", "2")
     w = str(max(min(int(form.get("w", "750")), 1000), 2))
     h = str(max(min(int(form.get("h", "750")), 1000), 2))
+    imgparams = dict(t=t, b=b, l=l, r=r, w=w, h=h)
 
     # Errors will sink into here
-    err = None
 
     try:
         img = image_cache.get((f, w, h, l, b, r, t))
-    except Exception as e:
-        err = e
-    
-    if not err:
-        return bottle.template("plotter", img=img, func=f, w=w, \
-                                   h=h, t=t, r=r, b=b, l=l)
+    except (LexError, YaccError, CCError) as err:
+        # In this case, we display the message, which we know is reasonable
+        msg = err.args[0]
+        
+        body = bottle.template("error/parse", func=f, err=msg, **imgparams)
+        bottle.abort(400, body)
+    except Exception as err:
+        # In this case, we're not so fortunate, so we just dump the traceback
+        tb =  traceback.format_exc()
+        body = bottle.template("error/server", func=f, err=tb, **imgparams)
+        bottle.abort(500, body)
     else:
-        from ply.lex import LexError
-        from mathparse.parser import YaccError
-        if type(err) in (LexError, YaccError, CCError):
-            body = bottle.template("error/parse", func=f, img=img, w=w, h=h, t=t, r=r, \
-                                       b=b, l=l, err=err.args[0])
-            bottle.abort(400, body)
-        else:
-            body = bottle.template("error/server", func=f, w=w, h=h, t=t, r=r, \
-                                       b=b, l=l, err=traceback.format_exc())
-            bottle.abort(500, body)
-    return
+        return dict(func=f, img=img, **imgparams)
 
 ## The gallery pages
 
