@@ -137,10 +137,8 @@ def source():
     import codecs
     complexcc = open("resources/include/complex.cc").read()
     ccfunccc = open("resources/include/ccfunc.cc").read()
-    indexpy = codecs.open("index.py", encoding="utf8").read()
     mathparse = codecs.open("mathparse/parser.py", encoding="utf8").read()
-    return dict(complex=complexcc, index=indexpy,
-                ccfunc=ccfunccc, mathparse=mathparse)
+    return dict(complex=complexcc, ccfunc=ccfunccc, mathparse=mathparse)
 
 ## Page Resources
 

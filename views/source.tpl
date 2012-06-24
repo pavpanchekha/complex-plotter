@@ -1,13 +1,22 @@
 %rebase master title="Source Code", extrahead='<script src="/resources/libraries/highlight.js"></script><link rel="stylesheet" href="/resources/libraries/highlight.css" />'
 <script> hljs.initHighlightingOnLoad(); </script>
 
+The code for this site is maintained in <a href="http://git-scm.com">
+<code>git</code> </a>, and can be found online at
+<a href="http://git.pavpanchekha.com/?p=complex-plotter.git;a=summary">
+git.pavpanchekha.com </a>.  Feel free to view the full code, including
+the website core, there.
+
 <h2>Complex Plotter</h2>
 <p>
-This file implements the core of the plotter core. You'll note that the
-parser we use just inserts the parsed input straight into <code>C++</code>
-code. Yes, that's massively insecure. We know.
+This file implements the core of the plotter core. You'll note that
+the parser we use just inserts the parsed input straight into
+<code>C++</code> code. Yes, that's massively insecure. We know.  Your
+input is passed through a parser that pretties it up and also tries
+its best to generate safe code; see below for the parser.
 </p>
-<pre><code class="language-cpp">{{complex}}</code></pre>
+<pre><code
+class="language-cpp">{{complex}}</code></pre>
 
 <h2>Complex Function Library</h2>
 <p>
@@ -21,16 +30,13 @@ implemented in a seperate library.
 </p>
 <pre><code class="language-cpp">{{ccfunc}}</code></pre>
 
-<h2>Website Core</h2>
-<p>
-The web site is built on <code>mod_python</code>, and the code below
-implements the core of the web site. It should give some idea of how
-the <code>C++</code> files are constructed, compiled, and run. Please
-don't write to say how hackish this all is.
-</p>
-<pre><code class="language-python">{{index}}</code></pre>
-
 <h2><code>mathparse.parser</code></h2>
+<p>
+Your input on the web is not spliced directly into <code>C++</code>;
+instead, it is first passed through a parser that expands calls like
+<code>z^5</code>, and also works to ensure that only safe code is
+inserted into the image generator.
+</p>
 <pre><code class="language-python">{{mathparse}}</code></pre>
 
 <h2>Licensing</h2>
