@@ -8,4 +8,4 @@ start:
 	python2 index.py &
 
 pull:
-	git pull origin wsgi-port
+	git pull origin master
