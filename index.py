@@ -118,7 +118,7 @@ def api():
     except:
         bottle.abort(400, "Failed to make image")
 
-    return open(img, "rb").read()
+    bottle.redirect("/" + img)
 
 ## "Static" pages
 
