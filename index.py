@@ -14,15 +14,9 @@ import config
 # A 100-image image cache
 image_cache = genimg.ImageCache(100)
 
-## The main page
+# For reading
 
-@bottle.route("/")
-@bottle.view("plotter")
-def index():
-    from ply.lex import LexError
-    from mathparse.parser import YaccError
-    from genimg import CCError
-
+def getform():
     form = bottle.request.query
 
     f = form.get("f", "exp(-pi * sec(pi * z/2))")
@@ -32,25 +26,39 @@ def index():
     r = form.get("r", "2")
     w = str(max(min(int(form.get("w", "750")), 1000), 2))
     h = str(max(min(int(form.get("h", "750")), 1000), 2))
-    imgparams = dict(t=t, b=b, l=l, r=r, w=w, h=h)
+
+    params = (t, b, l, r, w, h)
+    paramdict = dict(zip(["t", "b", "l", "r", "w", "h"], params))
+
+    return f, params, paramdict
+
+## The main page
+
+@bottle.route("/")
+@bottle.view("plotter")
+def index():
+    from ply.lex import LexError
+    from mathparse.parser import YaccError
+    from genimg import CCError
+
+    f, params, paramdict = getform()
 
     # Errors will sink into here
 
     try:
-        img = image_cache.get((f, w, h, l, b, r, t))
+        img = image_cache.get(f, *params)
     except (LexError, YaccError, CCError) as err:
         # In this case, we display the message, which we know is reasonable
         msg = err.args[0]
-        
-        body = bottle.template("error/parse", func=f, err=msg, **imgparams)
+        body = bottle.template("error/parse", func=f, err=msg, **paramdict)
         bottle.abort(400, body)
     except Exception as err:
         # In this case, we're not so fortunate, so we just dump the traceback
         tb =  traceback.format_exc()
-        body = bottle.template("error/server", func=f, err=tb, **imgparams)
+        body = bottle.template("error/server", func=f, err=tb, **paramdict)
         bottle.abort(500, body)
     else:
-        return dict(func=f, img=img, **imgparams)
+        return dict(func=f, img=img, **paramdict)
 
 ## The gallery pages
 
@@ -62,7 +70,7 @@ def gallery():
     
     for (i, desc, f, w, h, l, b, r, t) in gallery:
         if not os.path.exists("img/gallery-%d.png" % i):
-            img = image_cache.get((f, w, h, l, b, r, t))
+            img = image_cache.get(f, w, h, l, b, r, t)
             shutil.copy(img, "img/gallery-%d.png" % i)
 
     return dict(gallery=gallery)
@@ -92,28 +100,21 @@ def gallery_add(req):
 ## The API page
 
 @bottle.route("/api")
-def api(req):
+def api():
     bottle.response.content_type = "image/png"
 
-    if "f" not in req.form or not req.form["f"]:
-        bottle.abort(400, "No equation specified")
+    f, params, paramdict = getform()
 
-    f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
-    t = req.form.get("t", "2")
-    b = req.form.get("b", "-2")
-    l = req.form.get("l", "-2")
-    r = req.form.get("r", "2")
-    w = req.form.get("w", "750")
-    h = req.form.get("h", "750")
+    # Errors will sink into here
 
     try:
-        assert 0 < int(w) < 300
-        assert 0 < int(h) < 300
+        assert 0 < int(paramdict["w"]) < 1000
+        assert 0 < int(paramdict["h"]) < 1000
     except (AssertionError, ValueError):
         bottle.abort(400, "Width and height out of bounds")
 
     try:
-        img = image_cache.get((f, w, h, l, b, r, t))
+        img = image_cache.get(f, *params)
     except:
         bottle.abort(400, "Failed to make image")
 

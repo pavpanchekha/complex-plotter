@@ -10,6 +10,9 @@ import shutil
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 
 class ImageCache(lru.LRUCache):
+    def get(self, *args):
+        return super().get(args)
+
     def compute_value(self, args):
         return make_image(*args)
 
@@ -18,7 +21,7 @@ class ImageCache(lru.LRUCache):
 
 class CCError(Exception): pass
 
-def make_image(f, w, h, l, b, r, t):
+def make_image(f, t, b, l, r, w, h):
     f = parser.parse(f)
 
     id = random.randint(1, 100000000)
