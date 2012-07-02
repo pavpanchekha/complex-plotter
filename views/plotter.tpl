@@ -41,9 +41,9 @@
     page.
     </p>
   </div>
-  <button type="submit">Plot!</button>
+  <button id="submit" type="submit">Plot!</button>
   <div id="img">
-    <img src='{{img}}' width="750px" height="750px" alt="{{func}}"/>
+    <img src='/{{img}}' width="750px" height="750px" alt="{{func}}"/>
     <div id="cont">
       <div id="ll" class="note">
         <i><input name="l" id="l" value="{{l}}" /> + <input name="b" id="b" value="{{b}}"/>i</i>
@@ -103,6 +103,14 @@
       $("#l").val(data.l);
       $("#r").val(data.r);
       api.release();
+      return false;
+    });
+
+    $("#submit").click(function () {
+      api.destroy();
+      $("#img img").attr("src", "/api?f=" + escape($("#f").attr("value")));
+      api = $.Jcrop("#img img");
+      api.setOptions({onChange: update_box, onSelect: update_box, aspectRatio: 1});
       return false;
     });
 
