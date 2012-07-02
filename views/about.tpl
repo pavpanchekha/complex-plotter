@@ -52,6 +52,13 @@ these functions, write!
   <li><code>pi</code>, <code>e</code>, <code>masc</code> (Euler-Mascheroni)</li>
 </ul>
 
+<h2>Feedback and Bugs</h2>
+
+<p>Have comments, suggestions, hate mail?  Send them along to <a
+href="mailto:bugs+complex@pavpanchekha.com">my email address</a>.
+That way, it's easy for me to track and fix any problems you
+notice.</p>
+
 <h2>Programmer's API</h2>
 <p>The site offers an API for programmers. The main goal here is to
 allow devices such as the iPhone and Android phones to have convenient

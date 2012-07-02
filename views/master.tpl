@@ -17,7 +17,6 @@
       <li><a href="/">Plotter</a></li>
       <li><a href="/gallery">Gallery</a></li>
       <li><a href="/about">About</a></li>
-      <li><a href="/feedback">Feedback</a></li>
       <li><a href="/source">Source Code</a></li>
     </ul>
     <h1>&fnof; : &#8450; &rarr; &#8450;</h1>

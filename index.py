@@ -126,11 +126,6 @@ def api(req):
 def about():
     return {}
 
-@bottle.route("/feedback")
-@bottle.view("feedback")
-def feedback():
-    return {}
-
 @bottle.route("/source")
 @bottle.view("source")
 def source():
