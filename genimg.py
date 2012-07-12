@@ -11,7 +11,7 @@ __dir__ = os.path.dirname(os.path.abspath(__file__))
 
 class ImageCache(lru.LRUCache):
     def get(self, *args):
-        return super().get(args)
+        return lru.LRUCache.get(self, args)
 
     def compute_value(self, args):
         return make_image(*args)
