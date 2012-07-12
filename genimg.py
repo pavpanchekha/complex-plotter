@@ -37,7 +37,7 @@ def make_image(f, t, b, l, r, w, h):
     os.symlink(__dir__ + "/resources/include/ccfunc.cc",
                "/tmp/complex-%d/ccfunc.cc" % id)
 
-    P = subprocess.Popen(["g++", "-std=c++0x",
+    P = subprocess.Popen(["g++",
         "/tmp/complex-%d/complex.cc" % id,
         "/tmp/complex-%d/EasyBMP/EasyBMP.o" % id, "-o",
         "/tmp/complex-%d/plotter" % id, "-O1"],
