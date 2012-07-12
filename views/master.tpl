@@ -2,9 +2,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <script src="/resources/libraries/Jcrop/js/jquery.Jcrop.js"></script>
-    <script src="/resources/scripts/plotter.js"></script>
     <link rel="stylesheet" href="/resources/libraries/Jcrop/css/jquery.Jcrop.css" />
     <link rel="stylesheet" href="/resources/styles/main.css" />
     <link rel="stylesheet" href="/resources/styles/plotter.css" />

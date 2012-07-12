@@ -2,7 +2,7 @@
 <script> hljs.initHighlightingOnLoad(); </script>
 
 The code for this site is maintained in <a href="http://git-scm.com">
-<code>git</code> </a>, and can be found online at
+<code>git</code></a>, and can be found online at
 <a href="http://git.pavpanchekha.com/?p=complex-plotter.git;a=summary">
 git.pavpanchekha.com </a>.  Feel free to view the full code, including
 the website core, there.
