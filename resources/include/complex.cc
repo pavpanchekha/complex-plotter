@@ -55,11 +55,10 @@ double ystep = (win[1][1] - win[0][1]) / HEIGHT;
 
 int run(int c, int r) {
      cc z = cc(win[0][0] + xstep * c, win[1][1] - ystep * r);
-     cc out = -f1(z);
-     //cc w = log(-f1(z));
+     cc w = log(-f1(z));
 
-     double in = atan(2*sqrt(sqrt(real(out)*real(out) + imag(out)*imag(out)))) / (.5 * pi);
-     double hue = atan2(imag(out), real(out)) / (2 * pi) + .5;
+     double in = atan(real(w)) / pi + .5;
+     double hue = imag(w) / (2 * pi) + .5;
      return hsi2rgb(hue, in);
 }
 	
