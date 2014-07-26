@@ -34,6 +34,7 @@ $(function () {
     $("#l").val(-2);
     $("#r").val(2);
     api.release();
+    $("#submit").click();
     return false;
   });
 
@@ -49,13 +50,13 @@ $(function () {
   });
 
   $("#zoom").click(function() {
-      $("#t").val(data.t * 2);
-      $("#b").val(data.b * 2);
-      $("#l").val(data.l * 2);
-      $("#r").val(data.r * 2);
-      api.release();
-      $("#submit").click();
-      return false;
+    $("#t").val(data.t * 2);
+    $("#b").val(data.b * 2);
+    $("#l").val(data.l * 2);
+    $("#r").val(data.r * 2);
+    api.release();
+    $("#submit").click();
+    return false;
   });
 
   $("#submit").click(function () {
