@@ -1,7 +1,4 @@
 img/*
-include/*
-bin/*
-lib/*
 *.pyc
 resources/include/EasyBMP/EasyBMP.o
 config.py

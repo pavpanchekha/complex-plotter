@@ -55,6 +55,7 @@
         <input name="w" id="w" value="{{w}}" /> &times; <input name="h" id="h" value="{{h}}" />
       </div>
       <div id="resetbut" class="note">
+        <a href="#" id="zoom">Zoom out 2×</a> |
         <a href="#" id="reset">Reset Window</a> |
         <a href="#" id="clear">Clear Selection</a>
       </div>
