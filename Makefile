@@ -1,11 +1,19 @@
 all: start
 
-redo: resources/include/EasyBMP/EasyBMP.cpp
-	g++ resources/include/EasyBMP/EasyBMP.cpp -c -o resources/include/EasyBMP/EasyBMP.o
-	[ -d img ] || (mkdir img && echo "(l." > img/database.pickle)
+%.o: %.cpp
+	g++ $< -c -o $@
 
-start:
-	python2 index.py &
+img/database.pickle:
+	mkdir -p img
+	echo "(l." > $@
 
-pull:
-	git pull origin master
+bottle.py:
+	wget 'https://raw.githubusercontent.com/defnull/bottle/release-0.12/bottle.py' -O bottle.py
+
+start: bottle.py img/database.pickle resources/include/EasyBMP/EasyBMP.o config.py
+	nohup python2 index.py
+
+clean:
+	rm bottle.py
+	rm -r img
+	rm resources/include/EasyBMP/EasyBMP.o

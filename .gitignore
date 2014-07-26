@@ -2,4 +2,6 @@ img/*
 *.pyc
 resources/include/EasyBMP/EasyBMP.o
 config.py
-parsetab
+parsetab.*
+nohup.out
+bottle.py
