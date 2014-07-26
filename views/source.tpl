@@ -44,8 +44,8 @@ inserted into the image generator.
 entered by users or with its own license header, is licensed under
 the terms of the <abbr title="GNU Public License">GPL</abbr>, <a
   href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">version
-  3</a> or higher. The text of this license is available below. If you are
+  3</a> or higher. If you are
 unsure of whether or not you may use this code in a project of your
 own, feel free to contact the authors.</p>
-<p>All code is copyrighted, &copy; year 2009, by Pavel Panchekha and Sam
+<p>All code is &copy 2009 Pavel Panchekha and Sam
 Fingeret</p>
