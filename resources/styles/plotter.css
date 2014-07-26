@@ -79,6 +79,7 @@ form button {
   right: 0;
   text-align: center;
   z-index: 999;
+  padding: 2px 5px;
 }
 
 #ll {
