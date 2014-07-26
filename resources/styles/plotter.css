@@ -13,9 +13,9 @@ form button {
 }
 
 .note {
-  background: #fce94f;
-  border: 2px solid #c4a000;
+  background: white;
   position: absolute;
+  opacity: .9;
 }
 
 #helpbut {
@@ -79,7 +79,6 @@ form button {
   right: 0;
   text-align: center;
   z-index: 999;
-  width: 260px;
 }
 
 #ll {
