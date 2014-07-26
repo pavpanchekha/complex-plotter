@@ -1,11 +1,10 @@
 %rebase master title="Source Code", extrahead='<script src="/resources/libraries/highlight.js"></script><link rel="stylesheet" href="/resources/libraries/highlight.css" />'
 <script> hljs.initHighlightingOnLoad(); </script>
 
-The code for this site is maintained in <a href="http://git-scm.com">
-<code>git</code></a>, and can be found online at
-<a href="http://git.pavpanchekha.com/?p=complex-plotter.git;a=summary">
-git.pavpanchekha.com </a>.  Feel free to view the full code, including
-the website core, there.
+The source code for this site is maintained in <a href="http://git-scm.com">
+git</a>, and can be found on
+<a href="https://github.com/pavpanchekha/complex-plotter">GitHub</a>.
+Feel free to view the full code, including the website core, there.
 
 <h2>Complex Plotter</h2>
 <p>
