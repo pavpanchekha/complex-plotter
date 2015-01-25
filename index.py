@@ -7,6 +7,7 @@ import os
 import pickle
 import traceback
 import genimg
+import shutil
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 import config
@@ -70,7 +71,7 @@ def gallery():
     
     for (i, desc, f, w, h, l, b, r, t) in gallery:
         if not os.path.exists("img/gallery-%d.png" % i):
-            img = image_cache.get(f, w, h, l, b, r, t)
+            img = image_cache.get(f, t, b, l, r, w, h)
             shutil.copy(img, "img/gallery-%d.png" % i)
 
     return dict(gallery=gallery)
@@ -79,22 +80,27 @@ def gallery():
 @bottle.view("gallery-view")
 def gallery_view(viewid):
     gal = pickle.load(open("img/database.pickle", "rb"))
-    i, desc, f, w, h, l, b, r, t = filter(lambda x: x[0] == viewid, gal)[0]
+    i, desc, f, w, h, l, b, r, t = next(filter(lambda x: x[0] == viewid, gal))
     return dict(f=f, desc=desc, l=l, b=b, r=r, t=t, i=i)
 
-@bottle.route("/gallery_add")
-def gallery_add(req):
-    f = req.form.get("f", "exp(-pi * sec(pi * z/2))")
-    t = req.form.get("t", "2")
-    b = req.form.get("b", "-2")
-    l = req.form.get("l", "-2")
-    r = req.form.get("r", "2")
-    w = str(max(min(int(req.form.get("w", "750")), 1000), 2))
-    h = str(max(min(int(req.form.get("h", "750")), 1000), 2))
-    desc = req.form.get("desc", "")
-    
+@bottle.post("/gallery/add")
+def gallery_add():
+    form = bottle.request.forms
+    f = form.get("f", "exp(-pi * sec(pi * z/2))")
+    t = form.get("t", "2")
+    b = form.get("b", "-2")
+    l = form.get("l", "-2")
+    r = form.get("r", "2")
+    w = str(max(min(int(form.get("w", "750")), 1000), 2))
+    h = str(max(min(int(form.get("h", "750")), 1000), 2))
+    desc = form.get("desc", "")
+
     gal = pickle.load(open("img/database.pickle", "rb"))
-    gal.append((max(map(lambda x: x[0], gal)) + 1, desc, f, w, h, l, b, r, t))
+
+    id = max([-1] + list(map(lambda x: x[0], gal))) + 1
+    newrec = (id, desc, f, w, h, l, b, r, t)
+    
+    gal.append(newrec)
     pickle.dump(gal, open("img/database.pickle", "wb"))
 
 ## The API page
