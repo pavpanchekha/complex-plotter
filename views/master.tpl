@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="/resources/libraries/Jcrop/js/jquery.Jcrop.js"></script>
-    <link rel="stylesheet" href="/resources/libraries/Jcrop/css/jquery.Jcrop.css" />
+    <link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/jcrop"></script>
+    <script src="https://unpkg.com/jquery-jcrop"></script>
     <link rel="stylesheet" href="/resources/styles/main.css" />
     <link rel="stylesheet" href="/resources/styles/plotter.css" />
     <link rel="stylesheet" href="/resources/styles/gallery.css" />
